@@ -11,6 +11,8 @@
   "scripts": {
     "install-all": "npm install && npm install --prefix client && npm install --prefix server",
     "client-dev": "npm run dev --prefix client",
-    "server-dev": "npm run server --prefix server"
+    "server-dev": "npm run server --prefix server",
+    "build": "npm install --prefix server && npm run build --prefix server",
+    "start": "npm start --prefix server"
   }
 }
