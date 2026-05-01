@@ -10,8 +10,7 @@ const runStartupChecks = async () => {
     "DIRECT_URL",
     "JWT_SECRET",
     "SENDER_EMAIL",
-    "SMTP_USER",
-    "SMTP_PASSWORD",
+    "BREVO_API_KEY",
     "FRONTEND_URL",
   ];
 
@@ -38,29 +37,26 @@ const runStartupChecks = async () => {
     console.log(`   ❌ Database connection failed: ${err.message}`);
   }
 
-  // 3. SMTP Configuration Check (Run in background to prevent startup hang)
-  console.log("\n📧 SMTP Configuration: Check started in background...");
+  // 3. Brevo API Check (Run in background)
+  console.log("\n📧 Brevo API Configuration: Check started in background...");
   setTimeout(async () => {
     try {
-        const transporter = nodemailer.createTransport({
-          host: "smtp-relay.brevo.com",
-          port: 2525,
-          secure: false,
-          logger: false, 
-          debug: false,  
-          connectionTimeout: 30000, 
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASSWORD,
+        const response = await fetch("https://api.brevo.com/v3/account", {
+          method: "GET",
+          headers: {
+            "accept": "application/json",
+            "api-key": process.env.BREVO_API_KEY,
           },
-          tls: {
-            rejectUnauthorized: false
-          }
         });
-      await transporter.verify();
-      console.log("   ✅ SMTP authentication successful");
+      
+      if (response.ok) {
+        console.log("   ✅ Brevo API authentication successful");
+      } else {
+        const data = await response.json();
+        console.log(`   ❌ Brevo API authentication failed: ${data.message}`);
+      }
     } catch (err) {
-      console.log(`   ❌ SMTP authentication failed: ${err.message}`);
+      console.log(`   ❌ Brevo API check failed: ${err.message}`);
     }
   }, 1000);
 
