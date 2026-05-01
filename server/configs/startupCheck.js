@@ -10,9 +10,11 @@ const runStartupChecks = async () => {
     "DIRECT_URL",
     "JWT_SECRET",
     "SENDER_EMAIL",
+    "SMTP_USER",
     "SMTP_PASSWORD",
     "FRONTEND_URL",
   ];
+
   console.log("\n📦 Environment Variables:");
   requiredEnv.forEach((env) => {
     if (process.env[env]) {
@@ -43,9 +45,11 @@ const runStartupChecks = async () => {
         host: "smtp-relay.brevo.com",
         port: 587,
         secure: false,
-        connectionTimeout: 10000, // 10 seconds for cloud stability
+        logger: true, 
+        debug: true,  
+        connectionTimeout: 10000, 
         auth: {
-          user: process.env.SENDER_EMAIL,
+          user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASSWORD,
         },
       });
