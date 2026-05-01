@@ -47,11 +47,14 @@ const runStartupChecks = async () => {
         secure: false,
         logger: true, 
         debug: true,  
-        connectionTimeout: 10000, 
+        connectionTimeout: 20000, // 20 seconds for live stability
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASSWORD,
         },
+        tls: {
+          rejectUnauthorized: false
+        }
       });
     await transporter.verify();
     console.log("   ✅ SMTP authentication successful");
