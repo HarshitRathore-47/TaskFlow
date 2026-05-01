@@ -2,15 +2,12 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 465,
-  secure: true, // SSL
+  port: 587,
+  secure: false, // true for 465, false for other ports
   auth: {
     user: process.env.SENDER_EMAIL,
     pass: process.env.SMTP_PASSWORD,
   },
-  tls: {
-    rejectUnauthorized: false // Helps with connection stability in cloud environments
-  }
 });
 
 const sendEmail = async ({ to, subject, body, replyTo }) => {

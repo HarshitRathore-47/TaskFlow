@@ -41,16 +41,13 @@ const runStartupChecks = async () => {
   try {
       const transporter = nodemailer.createTransport({
         host: "smtp-relay.brevo.com",
-        port: 465,
-        secure: true,
-        connectionTimeout: 5000, // 5 seconds
+        port: 587,
+        secure: false,
+        connectionTimeout: 10000, // 10 seconds for cloud stability
         auth: {
           user: process.env.SENDER_EMAIL,
           pass: process.env.SMTP_PASSWORD,
         },
-        tls: {
-          rejectUnauthorized: false
-        }
       });
     await transporter.verify();
     console.log("   ✅ SMTP authentication successful");

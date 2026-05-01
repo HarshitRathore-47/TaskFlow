@@ -10,13 +10,13 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "install-all": "npm install && npm install --prefix client && npm install --prefix server",
-    "client-dev": "npm run dev --prefix client",
-    "server-dev": "npm run server --prefix server",
-    "build": "npm install --prefix server && npm run build --prefix server",
-    "build-client": "npm install && npm run build --workspace=project-management",
-    "start": "npm start --prefix server",
-    "start-client": "serve -s client/dist -l $PORT -a 0.0.0.0"
+    "install-all": "npm install && npm install --workspace=client && npm install --workspace=server",
+    "client-dev": "npm run dev --workspace=client",
+    "server-dev": "npm run server --workspace=server",
+    "build": "npm run build --workspaces --if-present",
+    "build-client": "npm run build --workspace=project-management",
+    "build-server": "npm run build --workspace=server",
+    "start": "npm start --workspace=server"
   },
   "dependencies": {
     "express": "^5.2.1",
