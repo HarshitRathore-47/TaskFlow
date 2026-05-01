@@ -6,7 +6,7 @@
     "buildCommand": "npm run build --workspace=project-management"
   },
   "deploy": {
-    "startCommand": "serve -s dist -l $PORT",
+    "startCommand": "npx serve -s dist -l $PORT",
     "healthcheckPath": "/",
     "healthcheckTimeout": 100
   }
