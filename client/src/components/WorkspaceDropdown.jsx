@@ -43,7 +43,7 @@ function WorkspaceDropdown() {
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-gray-800 dark:text-white text-sm truncate">
-              {currentWorkspace?.name || "Select Workspace"}
+              {currentWorkspace?.name || "No Workspace"}
             </p>
             <p className="text-xs text-gray-500 dark:text-zinc-400 truncate">
               {workspaces.length} workspace{workspaces.length !== 1 ? "s" : ""}

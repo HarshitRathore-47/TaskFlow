@@ -64,6 +64,7 @@ const workspaceSlice = createSlice({
       }
     },
     addProject: (state, action) => {
+      if (!state.currentWorkspace) return;
       state.currentWorkspace.projects.push(action.payload);
       // find workspace by id and add project to it
       state.workspaces = state.workspaces.map((w) =>
@@ -73,13 +74,9 @@ const workspaceSlice = createSlice({
       );
     },
     addTask: (state, action) => {
+      if (!state.currentWorkspace) return;
       state.currentWorkspace.projects = state.currentWorkspace.projects.map(
         (p) => {
-          console.log(
-            p.id,
-            action.payload.projectId,
-            p.id === action.payload.projectId
-          );
           if (p.id === action.payload.projectId) {
             p.tasks.push(action.payload);
           }
@@ -102,6 +99,7 @@ const workspaceSlice = createSlice({
       );
     },
     updateTask: (state, action) => {
+      if (!state.currentWorkspace) return;
       state.currentWorkspace.projects.map((p) => {
         if (p.id === action.payload.projectId) {
           p.tasks = p.tasks.map((t) =>
@@ -129,6 +127,7 @@ const workspaceSlice = createSlice({
       );
     },
     deleteTask: (state, action) => {
+      if (!state.currentWorkspace) return;
       state.currentWorkspace.projects.map((p) => {
         p.tasks = p.tasks.filter((t) => !action.payload.includes(t.id));
         return p;
@@ -152,6 +151,11 @@ const workspaceSlice = createSlice({
           : w
       );
     },
+    clearWorkspaces: (state) => {
+      state.workspaces = [];
+      state.currentWorkspace = null;
+      localStorage.removeItem("currentWorkspaceId");
+    },
   },
 
   extraReducers: (builder) => {
@@ -161,16 +165,24 @@ const workspaceSlice = createSlice({
 
     builder.addCase(fetchWorkspaces.fulfilled, (state, action) => {
       state.loading = false;
-      state.workspaces = action.payload;
+      state.workspaces = action.payload || [];
+
+      if (state.workspaces.length === 0) {
+        state.currentWorkspace = null;
+        localStorage.removeItem("currentWorkspaceId");
+        return;
+      }
 
       const storedId = localStorage.getItem("currentWorkspaceId");
       if (storedId) {
-        state.currentWorkspace =
-          action.payload.find((w) => w.id === storedId) ||
-          action.payload[0] ||
-          null;
+        const found = state.workspaces.find((w) => w.id === storedId);
+        state.currentWorkspace = found || state.workspaces[0];
+        if (!found) {
+           localStorage.setItem("currentWorkspaceId", state.workspaces[0].id);
+        }
       } else {
-        state.currentWorkspace = action.payload[0] || null;
+        state.currentWorkspace = state.workspaces[0];
+        localStorage.setItem("currentWorkspaceId", state.workspaces[0].id);
       }
     });
 
@@ -190,5 +202,6 @@ export const {
   addTask,
   updateTask,
   deleteTask,
+  clearWorkspaces,
 } = workspaceSlice.actions;
 export default workspaceSlice.reducer;

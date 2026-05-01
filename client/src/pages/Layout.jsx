@@ -28,14 +28,10 @@ const Layout = () => {
   }, [token, user, authLoading, dispatch]);
 
   useEffect(() => {
-    if (user && workspaces.length === 0 && !workspaceLoading) {
-      // Only fetch if we have a user but no workspaces and we aren't already loading
-      // To prevent infinite loop if user actually has 0 workspaces, 
-      // we should ideally have a way to know if we've already tried fetching.
-      // For now, let's just fetch once when user changes.
+    if (user?.id) {
       dispatch(fetchWorkspaces());
     }
-  }, [user?.id, dispatch]); // Only trigger when user ID changes
+  }, [user?.id, dispatch]);
 
   if (authLoading) {
     return (

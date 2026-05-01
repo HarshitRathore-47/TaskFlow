@@ -1,16 +1,47 @@
-import { Plus, LayoutDashboard, Briefcase, Users2, Target } from "lucide-react";
+import { Plus, LayoutDashboard, Briefcase, Users2, Target, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import StatsGrid from "../components/StatsGrid";
 import ProjectOverview from "../components/ProjectOverview";
 import RecentActivity from "../components/RecentActivity";
 import TasksSummary from "../components/TasksSummary";
 import CreateProjectDialog from "../components/CreateProjectDialog";
+import CreateWorkspaceDialog from "../components/CreateWorkspaceDialog";
 import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const { currentWorkspace } = useSelector((state) => state.workspace);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isWorkspaceDialogOpen, setIsWorkspaceDialogOpen] = useState(false);
+
+  if (!currentWorkspace) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-6 text-center">
+        <div className="p-6 bg-blue-500/10 rounded-full">
+          <LayoutDashboard className="size-16 text-blue-500" />
+        </div>
+        <div className="max-w-md space-y-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Welcome, {user?.name}!
+          </h1>
+          <p className="text-gray-500 dark:text-zinc-400">
+            You are not part of any workspace yet. You can create your own workspace or wait for an invitation from an administrator.
+          </p>
+        </div>
+        <button
+          onClick={() => setIsWorkspaceDialogOpen(true)}
+          className="flex items-center gap-2 px-8 py-3 text-lg font-semibold rounded-xl bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all shadow-xl shadow-blue-500/20"
+        >
+          <PlusCircle size={24} /> Create Your First Workspace
+        </button>
+
+        <CreateWorkspaceDialog
+          isDialogOpen={isWorkspaceDialogOpen}
+          setIsDialogOpen={setIsWorkspaceDialogOpen}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">

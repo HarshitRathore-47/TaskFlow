@@ -2,11 +2,17 @@ import { SearchIcon, PanelLeft, LogOut, MoonIcon, SunIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../features/themeSlice";
 import { logout } from "../features/authSlice";
+import { clearWorkspaces } from "../features/workspaceSlice";
 
 const Navbar = ({ setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearWorkspaces());
+  };
 
   return (
     <div className="w-full bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-6 xl:px-16 py-3 flex-shrink-0">
@@ -52,7 +58,7 @@ const Navbar = ({ setIsSidebarOpen }) => {
               {user?.name?.charAt(0) || "U"}
             </div>
             <button
-              onClick={() => dispatch(logout())}
+              onClick={handleLogout}
               className="p-2 text-gray-500 hover:text-red-500 transition-colors"
               title="Logout"
             >

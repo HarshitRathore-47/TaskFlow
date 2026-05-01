@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../configs/api";
+import { clearWorkspaces } from "./workspaceSlice";
 
 export const login = createAsyncThunk("auth/login", async (userData, thunkAPI) => {
   try {
     const response = await api.post("/auth/login", userData);
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
+      // Clear any leftover workspace state
+      thunkAPI.dispatch(clearWorkspaces());
     }
     return response.data;
   } catch (error) {
@@ -18,6 +21,8 @@ export const register = createAsyncThunk("auth/register", async (userData, thunk
     const response = await api.post("/auth/register", userData);
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
+      // Clear any leftover workspace state
+      thunkAPI.dispatch(clearWorkspaces());
     }
     return response.data;
   } catch (error) {
