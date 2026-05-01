@@ -43,11 +43,11 @@ const runStartupChecks = async () => {
   try {
       const transporter = nodemailer.createTransport({
         host: "smtp-relay.brevo.com",
-        port: 587,
+        port: 2525, // Using port 2525 to bypass potential cloud blocking
         secure: false,
         logger: true, 
         debug: true,  
-        connectionTimeout: 20000, // 20 seconds for live stability
+        connectionTimeout: 30000, // 30 seconds for maximum stability
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASSWORD,
