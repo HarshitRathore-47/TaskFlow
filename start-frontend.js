@@ -28,8 +28,9 @@ if (!fs.existsSync(distPath)) {
 // Serve static files
 app.use(express.static(distPath));
 
-// Express 5 compatible catch-all route: Named wildcard required
-app.get('/*', (req, res) => {
+// Express 5 compatible catch-all route: Named wildcard is MANDATORY
+// Syntax: *parameterName (e.g., *path)
+app.get('*path', (req, res) => {
   const filePath = path.join(distPath, 'index.html');
   console.log(`[SPA Redirect] Serving: ${req.url} -> index.html`);
   res.sendFile(filePath, (err) => {
