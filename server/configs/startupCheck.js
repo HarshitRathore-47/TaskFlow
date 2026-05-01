@@ -38,31 +38,33 @@ const runStartupChecks = async () => {
     console.log(`   ❌ Database connection failed: ${err.message}`);
   }
 
-  // 3. SMTP Configuration Check
-  console.log("\n📧 SMTP Configuration:");
-  try {
-      const transporter = nodemailer.createTransport({
-        host: "smtp-relay.brevo.com",
-        port: 2525, // Using port 2525 to bypass potential cloud blocking
-        secure: false,
-        logger: true, 
-        debug: true,  
-        connectionTimeout: 30000, // 30 seconds for maximum stability
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD,
-        },
-        tls: {
-          rejectUnauthorized: false
-        }
-      });
-    await transporter.verify();
-    console.log("   ✅ SMTP authentication successful");
-  } catch (err) {
-    console.log(`   ❌ SMTP authentication failed: ${err.message}`);
-  }
+  // 3. SMTP Configuration Check (Run in background to prevent startup hang)
+  console.log("\n📧 SMTP Configuration: Check started in background...");
+  setTimeout(async () => {
+    try {
+        const transporter = nodemailer.createTransport({
+          host: "smtp-relay.brevo.com",
+          port: 587,
+          secure: false,
+          logger: false, 
+          debug: false,  
+          connectionTimeout: 15000, 
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+      await transporter.verify();
+      console.log("   ✅ SMTP authentication successful");
+    } catch (err) {
+      console.log(`   ❌ SMTP authentication failed: ${err.message}`);
+    }
+  }, 1000);
 
-  console.log("\n🚀 --- DIAGNOSTICS COMPLETE ---\n");
+  console.log("\n🚀 --- INITIAL DIAGNOSTICS COMPLETE ---\n");
 };
 
 export default runStartupChecks;
