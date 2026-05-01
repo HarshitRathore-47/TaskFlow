@@ -1,0 +1,13 @@
+{
+  "name": "taskflow-root",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install-all": "npm install && npm install --prefix client && npm install --prefix server",
+    "client-dev": "npm run dev --prefix client",
+    "server-dev": "npm run server --prefix server"
+  }
+}
