@@ -28,14 +28,16 @@ if (!fs.existsSync(distPath)) {
 // Serve static files
 app.use(express.static(distPath));
 
-// Express 5 compatible catch-all route using regex
-app.get(/^(?!\/api).+/, (req, res) => {
+// Professional SPA Catch-all: Works for root "/" and all sub-routes
+app.get('*', (req, res) => {
   const filePath = path.join(distPath, 'index.html');
-  console.log(`Serving SPA: ${filePath}`);
+  console.log(`[SPA Redirect] Serving: ${req.url} -> index.html`);
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error(`❌ Error sending index.html: ${err.message}`);
-      res.status(500).send("Error loading application");
+      if (!res.headersSent) {
+        res.status(500).send("Frontend build not found. Please check deployment logs.");
+      }
     }
   });
 });
