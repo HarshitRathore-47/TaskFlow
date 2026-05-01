@@ -37,7 +37,6 @@ const runStartupChecks = async () => {
       host: "smtp-relay.brevo.com",
       port: 465,
       secure: true,
-      connectionTimeout: 5000,
       auth: {
         user: process.env.SENDER_EMAIL,
         pass: process.env.SMTP_PASSWORD,
