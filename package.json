@@ -15,6 +15,9 @@
     "build": "npm install --prefix server && npm run build --prefix server",
     "build-client": "npm install && npm run build --workspace=project-management",
     "start": "npm start --prefix server",
-    "start-client": "serve -s client/dist -l $PORT"
+    "start-client": "node start-frontend.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
