@@ -28,9 +28,9 @@ if (!fs.existsSync(distPath)) {
 // Serve static files
 app.use(express.static(distPath));
 
-// Express 5 compatible catch-all route: Named wildcard is MANDATORY
-// Syntax: *parameterName (e.g., *path)
-app.get('*path', (req, res) => {
+// Professional SPA Catch-all: Works for all versions of Express (4 and 5)
+// This avoids the PathError by not using any parameters in the wildcard
+app.use((req, res) => {
   const filePath = path.join(distPath, 'index.html');
   console.log(`[SPA Redirect] Serving: ${req.url} -> index.html`);
   res.sendFile(filePath, (err) => {

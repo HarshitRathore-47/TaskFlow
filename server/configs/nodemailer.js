@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 465,
-  secure: true, // Use SSL (Industry standard for secure cloud SMTP)
+  secure: true, // Use SSL (Required for Railway)
   auth: {
     user: process.env.SENDER_EMAIL,
     pass: process.env.SMTP_PASSWORD,
