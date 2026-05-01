@@ -11,15 +11,21 @@ const runStartupChecks = async () => {
     "JWT_SECRET",
     "SENDER_EMAIL",
     "SMTP_PASSWORD",
+    "FRONTEND_URL",
   ];
   console.log("\n📦 Environment Variables:");
   requiredEnv.forEach((env) => {
     if (process.env[env]) {
-      console.log(`   ✅ ${env} is set`);
+      const value = env.includes("PASSWORD") || env.includes("SECRET") || env.includes("URL") ? "********" : process.env[env];
+      console.log(`   ✅ ${env} is set (${value})`);
     } else {
       console.log(`   ❌ ${env} is MISSING`);
     }
   });
+
+  console.log(`\n🌐 Server Config:`);
+  console.log(`   - PORT: ${process.env.PORT || 5000}`);
+  console.log(`   - NODE_ENV: ${process.env.NODE_ENV || "development"}`);
 
   // 2. Database Connection Check
   console.log("\n🗄️  Database Connection:");

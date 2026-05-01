@@ -1,12 +1,10 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "installCommand": "npm install --include-workspace-root",
-    "buildCommand": "npm run build --prefix server"
+    "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "npm start --prefix server",
+    "startCommand": "npm start",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
