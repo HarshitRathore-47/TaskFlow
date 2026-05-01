@@ -9,6 +9,7 @@ import projectRouter from "./routes/projectRoutes.js";
 import taskRouter from "./routes/taskRoutes.js";
 import commentRouter from "./routes/commentRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import runStartupChecks from "./configs/startupCheck.js";
 
 const app = express();
 
@@ -34,8 +35,10 @@ app.use("/api/comments", protect, commentRouter);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () =>
+runStartupChecks();
+
+app.listen(PORT, "0.0.0.0", () =>
   console.log(
-    `Server is running on port ${PORT} => http://localhost:${PORT} 🚀`
+    `Server is running on port ${PORT} => http://0.0.0.0:${PORT} 🚀`
   )
 );
