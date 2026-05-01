@@ -5,6 +5,9 @@
     "client",
     "server"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "install-all": "npm install && npm install --prefix client && npm install --prefix server",
     "client-dev": "npm run dev --prefix client",

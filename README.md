@@ -6,9 +6,7 @@
 
   **Modern Full-Stack Team Task Manager with Real-time Collaboration & Automated Workflows**
 
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/taskflow/pulls)
-  [![Built with React](https://img.shields.io/badge/Built%20with-React-61DAFB?logo=react)](https://reactjs.org/)
-  [![Powered by Inngest](https://img.shields.io/badge/Powered%20by-Inngest-FF4F00?logo=inngest)](https://www.inngest.com/)
+
 
   <p align="center">
     <a href="#✨-features">Features</a> •

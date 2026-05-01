@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "description": "",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
