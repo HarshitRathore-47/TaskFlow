@@ -8,8 +8,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.SENDER_EMAIL,
     pass: process.env.SMTP_PASSWORD,
   },
-  debug: true, // Show debug info
-  logger: true, // Log to console
+  tls: {
+    rejectUnauthorized: false // Helps with connection stability in cloud environments
+  }
 });
 
 const sendEmail = async ({ to, subject, body, replyTo }) => {

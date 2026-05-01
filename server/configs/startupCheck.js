@@ -33,15 +33,19 @@ const runStartupChecks = async () => {
   // 3. SMTP Configuration Check
   console.log("\n📧 SMTP Configuration:");
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.SENDER_EMAIL,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
+      const transporter = nodemailer.createTransport({
+        host: "smtp-relay.brevo.com",
+        port: 465,
+        secure: true,
+        connectionTimeout: 5000, // 5 seconds
+        auth: {
+          user: process.env.SENDER_EMAIL,
+          pass: process.env.SMTP_PASSWORD,
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
     await transporter.verify();
     console.log("   ✅ SMTP authentication successful");
   } catch (err) {
