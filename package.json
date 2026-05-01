@@ -13,6 +13,7 @@
     "client-dev": "npm run dev --prefix client",
     "server-dev": "npm run server --prefix server",
     "build": "npm install --prefix server && npm run build --prefix server",
+    "build-client": "npm install && npm run build --workspace=project-management",
     "start": "npm start --prefix server"
   }
 }
