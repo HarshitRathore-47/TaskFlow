@@ -17,8 +17,6 @@
     <a href="#🚀-deployment">Deployment</a>
   </p>
 
-  <img src="dashboard.png" width="100%" alt="Taskflow Dashboard" style="border-radius: 10px; margin: 20px 0; border: 1px solid #e2e8f0;" />
-
 </div>
 
 ---
