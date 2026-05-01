@@ -27,6 +27,11 @@ app.get("/", (req, res) => res.send("Server is live!⌛"));
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Routes
+// Health check endpoint for Railway
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use("/api/auth", authRouter);
 app.use("/api/workspaces", protect, workspaceRouter);
 app.use("/api/projects", protect, projectRouter);
