@@ -10,12 +10,21 @@ const PORT = process.env.PORT || 5173;
 
 // Log every request to see if it reaches the server
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log(`[REQUEST] ${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
 });
 
 const distPath = path.join(__dirname, 'dist');
-console.log(`Serving files from: ${distPath}`);
+console.log(`[INFO] Current working directory: ${process.cwd()}`);
+console.log(`[INFO] Serving files from: ${distPath}`);
+
+import fs from 'fs';
+if (fs.existsSync(distPath)) {
+    console.log(`[SUCCESS] dist folder exists`);
+    console.log(`[INFO] Contents of dist: ${fs.readdirSync(distPath)}`);
+} else {
+    console.log(`[ERROR] dist folder NOT FOUND at ${distPath}`);
+}
 
 // Serve static files from the 'dist' directory
 app.use(express.static(distPath));
