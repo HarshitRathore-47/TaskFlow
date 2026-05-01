@@ -13,13 +13,13 @@
     "install-all": "npm install && npm install --workspace=client && npm install --workspace=server",
     "client-dev": "npm run dev --workspace=client",
     "server-dev": "npm run server --workspace=server",
-    "build": "echo 'Root build skipped'",
+    "build": "echo 'Root build skipped. Use build-client or build-server'",
     "build-client": "npm run build --workspace=project-management",
     "build-server": "npm run build --workspace=server",
     "start": "npm start --workspace=server"
   },
   "dependencies": {
-    "express": "4.22.1",
+    "express": "^4.18.2",
     "serve": "^14.2.4"
   }
 }
